@@ -14,9 +14,9 @@ function TramTimeline({timeline}) {
     return (
         <div className='timeline'>
         <Timeline>
-          {(timeline ?? []).map(row => {
+          {(timeline ?? []).map((row, index) => {
             return (
-              <TimelineItem>
+              <TimelineItem key={index}>
                 <TimelineOppositeContent color="textSecondary">
                   {row.time}
                 </TimelineOppositeContent>
