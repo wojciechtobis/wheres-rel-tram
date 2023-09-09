@@ -5,7 +5,19 @@ import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import { useMap } from 'react-leaflet/hooks'
 import L from 'leaflet';
 
+import Timeline from '@mui/lab/Timeline';
+import TimelineItem from '@mui/lab/TimelineItem';
+import TimelineSeparator from '@mui/lab/TimelineSeparator';
+import TimelineConnector from '@mui/lab/TimelineConnector';
+import TimelineContent, { timelineContentClasses } from '@mui/lab/TimelineContent';
+import TimelineDot from '@mui/lab/TimelineDot';
+import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
+
 import './App.css';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 
 function UpdateMapComponent({center}) {
   const map = useMap()
@@ -45,15 +57,46 @@ function App() {
   console.log('position:::', position)
 
   return (
-    <div className='map-container-wrapper'>
-      <MapContainer center={position} zoom={12} className='map-container'>
-        <UpdateMapComponent center={position}/>
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Marker position={position} icon={icon} />
-      </MapContainer>
+    <div className='app'>
+      <div className='map-container-wrapper'>
+        <MapContainer center={position} zoom={12} className='map-container'>
+          <UpdateMapComponent center={position}/>
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <Marker position={position} icon={icon} />
+        </MapContainer>
+      </div>
+      <div className='schedule'>
+        <Timeline
+          sx={{
+            [`& .${timelineContentClasses.root}`]: {
+              flex: 0.2,
+            },
+          }}
+        >
+          <TimelineItem>
+            <TimelineOppositeContent color="textSecondary">
+              09:30 am
+            </TimelineOppositeContent>
+            <TimelineSeparator>
+              <TimelineDot />
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent>Eat</TimelineContent>
+          </TimelineItem>
+          <TimelineItem>
+            <TimelineOppositeContent color="textSecondary">
+              10:00 am
+            </TimelineOppositeContent>
+            <TimelineSeparator>
+              <TimelineDot />
+            </TimelineSeparator>
+            <TimelineContent>Code</TimelineContent>
+          </TimelineItem>
+        </Timeline>
+      </div>
     </div>
   );
 }

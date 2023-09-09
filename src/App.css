@@ -1,9 +1,18 @@
 @import '~leaflet/dist/leaflet.css';
 
+.app {
+  display: flex;
+}
+
 .map-container {
   height: 100%;
 }
 
 .map-container-wrapper {
   height: 600px;
+  width: 60%;
+}
+
+.schedule {
+  width: 400px
 }
