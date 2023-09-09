@@ -21,10 +21,10 @@ function TramTimeline({timeline}) {
                   {row.time}
                 </TimelineOppositeContent>
                 <TimelineSeparator>
-                  <TimelineDot />
+                  <TimelineDot variant={ row.isVisited ? "filled" : "outlined" } color="primary"/>
                   { index === timeline.length-1 ? null : <TimelineConnector />}
                 </TimelineSeparator>
-                <TimelineContent>{row.stop}</TimelineContent>
+                <TimelineContent sx={{ textDecoration: row.isVisited ? "line-through" : "none" }}>{row.stop}</TimelineContent>
               </TimelineItem>
             )
           })}
