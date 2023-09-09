@@ -8,7 +8,7 @@ import '@fontsource/roboto/700.css';
 
 import Map from './Map';
 import TramTimeline from './TramTimeline'
-import { updateTramPosition, updateTimeline } from '../services/tram';
+import { updateTramPosition, updateTimeline } from '../services/ttss';
 
 function App() {
   const initialPosition = [50.04, 19.96]
