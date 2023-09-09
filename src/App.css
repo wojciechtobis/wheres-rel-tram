@@ -2,6 +2,7 @@
 
 .app {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .map-container {
@@ -10,9 +11,11 @@
 
 .map-container-wrapper {
   height: 600px;
-  width: 60%;
+  min-width: 40%;
+  flex: 1;
 }
 
-.schedule {
-  width: 400px
+.timeline {
+  flex: 1;
+  min-width: 400px
 }

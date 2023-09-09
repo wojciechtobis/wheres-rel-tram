@@ -31,6 +31,8 @@ function UpdateMapComponent({center}) {
 function App() {
   const initialPosition = [50.04, 19.96]
   const [position, setPosition] = useState(initialPosition)
+  const [tripId, setTripId] = useState()
+  const [timeline, setTimeline] = useState()
 
   const iconSize = 40
   const src = '/marker.svg'
@@ -49,12 +51,26 @@ function App() {
   useEffect(() => {
     fetch('https://api.ttss.pl/positions/?type=t')
       .then((response) => response.json())
-      .then((json) => json.pos['413'])
-      .then(currentPosition => setPosition([currentPosition.lat, currentPosition.lon]))
+      .then((json) => json.pos['417'])
+      .then(tram => {
+        setPosition([tram.lat, tram.lon])
+        setTripId(tram.trip)
+      })
       .then(() => console.log('In fetch'))
   }, [])
 
+  const mapTimelineRow = row => ({ "time": row.time, "stop" : row.seq + '. ' + row.name })
+
+  useEffect(() => {
+    if(!tripId) return
+    fetch('https://api.ttss.pl/trip/?type=t&id='+tripId)
+      .then((response) => response.json())
+      .then((json) => json.data)
+      .then((data) => setTimeline(data.map(mapTimelineRow)))
+  }, [tripId])
+
   console.log('position:::', position)
+  console.log('timeline:::', timeline)
 
   return (
     <div className='app'>
@@ -68,33 +84,22 @@ function App() {
           <Marker position={position} icon={icon} />
         </MapContainer>
       </div>
-      <div className='schedule'>
-        <Timeline
-          sx={{
-            [`& .${timelineContentClasses.root}`]: {
-              flex: 0.2,
-            },
-          }}
-        >
-          <TimelineItem>
-            <TimelineOppositeContent color="textSecondary">
-              09:30 am
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineDot />
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineContent>Eat</TimelineContent>
-          </TimelineItem>
-          <TimelineItem>
-            <TimelineOppositeContent color="textSecondary">
-              10:00 am
-            </TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineDot />
-            </TimelineSeparator>
-            <TimelineContent>Code</TimelineContent>
-          </TimelineItem>
+      <div className='timeline'>
+        <Timeline>
+          {(timeline ?? []).map(row => {
+            return (
+              <TimelineItem>
+                <TimelineOppositeContent color="textSecondary">
+                  {row.time}
+                </TimelineOppositeContent>
+                <TimelineSeparator>
+                  <TimelineDot />
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent>{row.stop}</TimelineContent>
+              </TimelineItem>
+            )
+          })}
         </Timeline>
       </div>
     </div>
