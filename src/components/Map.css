@@ -1,0 +1,9 @@
+.map-container {
+    height: 100%;
+}
+  
+.map-container-wrapper {
+    height: 600px;
+    min-width: 40%;
+    flex: 1;
+}
