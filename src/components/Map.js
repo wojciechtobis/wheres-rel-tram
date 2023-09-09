@@ -11,7 +11,7 @@ function UpdateMapComponent({center}) {
   const map = useMap()
   useEffect(() => {
     map.setView(center, 15)
-  }, [center])
+  }, [center, map])
   return null
 }
 
