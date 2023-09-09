@@ -12,8 +12,8 @@ import './TramTimeline.css'
 
 function TramTimeline({timeline}) {
     return (
-        <div className='timeline'>
-        <Timeline>
+      <div className='timeline'>
+        <Timeline style={{maxHeight: '600px', overflow: 'auto'}}>
           {(timeline ?? []).map((row, index) => {
             return (
               <TimelineItem key={index}>
@@ -22,7 +22,7 @@ function TramTimeline({timeline}) {
                 </TimelineOppositeContent>
                 <TimelineSeparator>
                   <TimelineDot />
-                  <TimelineConnector />
+                  { index == timeline.length-1 ? null : <TimelineConnector />}
                 </TimelineSeparator>
                 <TimelineContent>{row.stop}</TimelineContent>
               </TimelineItem>
