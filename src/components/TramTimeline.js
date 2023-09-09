@@ -22,7 +22,7 @@ function TramTimeline({timeline}) {
                 </TimelineOppositeContent>
                 <TimelineSeparator>
                   <TimelineDot />
-                  { index == timeline.length-1 ? null : <TimelineConnector />}
+                  { index === timeline.length-1 ? null : <TimelineConnector />}
                 </TimelineSeparator>
                 <TimelineContent>{row.stop}</TimelineContent>
               </TimelineItem>

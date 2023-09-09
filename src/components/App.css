@@ -1,6 +1,12 @@
 @import '~leaflet/dist/leaflet.css';
 
-.app {
+.header {
+  text-align: center;
+  padding: 20px;
+  font-size: 2rem;
+}
+
+.content {
   display: flex;
   flex-wrap: wrap;
 }

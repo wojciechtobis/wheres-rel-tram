@@ -8,26 +8,29 @@ import '@fontsource/roboto/700.css';
 
 import Map from './Map';
 import TramTimeline from './TramTimeline'
-import { updateTramPosition, updateTimeline } from '../services/ttss';
+import { updateTram, updateTimeline } from '../services/ttss';
 
 function App() {
-  const initialPosition = [50.04, 19.96]
-  const [position, setPosition] = useState(initialPosition)
-  const [tripId, setTripId] = useState()
   const [timeline, setTimeline] = useState()
+  const [tram, setTram] = useState({ lat: 50.04, lon: 19.96 })
 
   useEffect(() => {
-    updateTramPosition(setPosition, setTripId)
+    updateTram(setTram)
   }, [])
 
   useEffect(() => {
-    updateTimeline(tripId, setTimeline)
-  }, [tripId])
+    updateTimeline(tram.trip, setTimeline)
+  }, [tram.trip])
 
   return (
     <div className='app'>
-      <Map position={position} />
-      <TramTimeline timeline={timeline}/>
+      <div className='header'>
+        {tram.line} {tram.dir}
+      </div>
+      <div className='content'>
+        <Map position={[tram.lat, tram.lon]} />
+        <TramTimeline timeline={timeline}/>
+      </div>
     </div>
   );
 }
