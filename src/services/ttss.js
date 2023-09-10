@@ -5,7 +5,9 @@ export function updateTram(setTram) {
     fetch(`${baseApiUrl}/positions/?type=t`)
         .then((response) => response.json())
         .then((json) => json.pos[tramId])
-        .then(tram => setTram(tram))
+        .then(tram => {
+            if(!!tram) setTram(tram)
+        })
 }
 
 function isVisited(stopTime) {
@@ -26,7 +28,9 @@ const parseRow = row => ({
 export function updateTimeline(tripId, setTimeline) {
     if(!tripId) return
     fetch(`${baseApiUrl}/trip/?type=t&id=${tripId}`)
-      .then((response) => response.json())
-      .then((json) => json.data)
-      .then((data) => setTimeline(data.map(parseRow)))
+        .then((response) => response.json())
+        .then((json) => json.data)
+        .then((data) => {
+            if(!!data) setTimeline(data.map(parseRow))
+        })
 }

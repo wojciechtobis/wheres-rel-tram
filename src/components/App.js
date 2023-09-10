@@ -13,7 +13,7 @@ import { updateTram, updateTimeline } from '../services/ttss';
 function App() {
   const [time, setTime] = useState(Date.now())
   const [timeline, setTimeline] = useState()
-  const [tram, setTram] = useState({ lat: 50.04, lon: 19.96 })
+  const [tram, setTram] = useState({ lat: 50.04, lon: 19.96, line: '', dir: 'Vehicle is not logged into GTFS Realtime system' })
 
   useEffect(() => {
     const interval = setInterval(() => setTime(Date.now()), 10000);
