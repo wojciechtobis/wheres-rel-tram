@@ -1,4 +1,4 @@
-const tramId = 417
+const tramId = 408
 const baseApiUrl = 'https://api.ttss.pl'
 
 export function updateTram(setTram) {
@@ -13,14 +13,8 @@ function isVisited(stopTime) {
     const parsedStopTime = new Date()
     parsedStopTime.setHours(parts[0])
     parsedStopTime.setMinutes(parts[1])
-    
-    // TO REMOVE
-    const dateToCompare = new Date()
-    dateToCompare.setHours(9)
-    dateToCompare.setMinutes(15)
-    //
 
-    return parsedStopTime < dateToCompare;
+    return parsedStopTime < new Date();
 }
 
 const parseRow = row => ({ 
