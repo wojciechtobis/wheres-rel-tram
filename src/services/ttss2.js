@@ -4,6 +4,8 @@ const parseStop = singleStop => ({
     isVisited: singleStop.old
 });
 
+const parsePath = pathPoint => ([pathPoint.latitude, pathPoint.longitude])
+
 export function updateTram(setTram, relPosition) {
     fetch('https://wheres-rel-tram.azurewebsites.net/api/proxy')
         .then((response) => response.json())
@@ -14,18 +16,20 @@ export function updateTram(setTram, relPosition) {
                 dir: tram.trip_headsign,
                 lat: tram.latitude,
                 lon: tram.longitude,
-                timeline: tram.stop_times.map(parseStop)
+                timeline: tram.stop_times.map(parseStop),
+                path: tram.path.map(parsePath)
             })
         })
         .then(tram => setTram(tram))
         .catch(error => {
             console.log('Error:::', error)
             setTram({ 
-                lat: relPosition[0],
-                lon: relPosition[1],
                 line: '',
                 dir: 'Error while fetching data',
-                timeline: []
+                lat: relPosition[0],
+                lon: relPosition[1],
+                timeline: [],
+                path: []
             })
         })
 }

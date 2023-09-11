@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import ReactDOMServer from 'react-dom/server';
 
-import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Polyline } from 'react-leaflet';
 import { useMap } from 'react-leaflet/hooks'
 import L from 'leaflet';
 
@@ -15,7 +15,7 @@ function UpdateMapComponent({center}) {
   return null
 }
 
-function Map({tramPosition, relPosition}) {
+function Map({tramPosition, relPosition, path}) {
   function getIcon(image) {
     const iconSize = 40
 
@@ -44,6 +44,7 @@ function Map({tramPosition, relPosition}) {
             />
             <Marker position={tramPosition} icon={tramMarker} />
             <Marker position={relPosition} icon={relMarker} />
+            <Polyline positions={path} color={'blue'} opacity="0.5" weight="5"/>
           </MapContainer>
         </div>
   );

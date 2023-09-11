@@ -13,7 +13,7 @@ import { updateTram } from '../services/ttss2';
 function App() {
   const relPosition = [50.05895385940277, 19.962704]
   const [time, setTime] = useState(Date.now())
-  const [tram, setTram] = useState({ lat: relPosition[0], lon: relPosition[1], line: '', dir: 'Vehicle is not logged into GTFS Realtime system', timeline: [] })
+  const [tram, setTram] = useState({ lat: relPosition[0], lon: relPosition[1], line: '', dir: 'Vehicle is not logged into GTFS Realtime system', timeline: [], path: [] })
 
   useEffect(() => {
     const interval = setInterval(() => setTime(Date.now()), 60000);
@@ -30,7 +30,7 @@ function App() {
         {tram.line} {tram.dir}
       </div>
       <div className='content'>
-        <Map tramPosition={[tram.lat, tram.lon]} relPosition={relPosition}/>
+        <Map tramPosition={[tram.lat, tram.lon]} relPosition={relPosition} path={tram.path}/>
         <TramTimeline timeline={tram.timeline}/>
       </div>
     </div>
