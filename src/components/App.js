@@ -8,25 +8,21 @@ import '@fontsource/roboto/700.css';
 
 import Map from './Map';
 import TramTimeline from './TramTimeline'
-import { updateTram, updateTimeline } from '../services/ttss';
+import { updateTram } from '../services/ttss2';
 
 function App() {
+  const relPosition = [50.05895385940277, 19.962704]
   const [time, setTime] = useState(Date.now())
-  const [timeline, setTimeline] = useState()
-  const [tram, setTram] = useState({ lat: 50.04, lon: 19.96, line: '', dir: 'Vehicle is not logged into GTFS Realtime system' })
+  const [tram, setTram] = useState({ lat: relPosition[0], lon: relPosition[1], line: '', dir: 'Vehicle is not logged into GTFS Realtime system', timeline: [] })
 
   useEffect(() => {
-    const interval = setInterval(() => setTime(Date.now()), 10000);
+    const interval = setInterval(() => setTime(Date.now()), 60000);
     return () => clearInterval(interval)
   }, [])
 
   useEffect(() => {
-    updateTram(setTram)
+    updateTram(setTram, relPosition)
   }, [time])
-
-  useEffect(() => {
-    updateTimeline(tram.trip, setTimeline)
-  }, [tram.trip])
 
   return (
     <div className='app'>
@@ -34,8 +30,8 @@ function App() {
         {tram.line} {tram.dir}
       </div>
       <div className='content'>
-        <Map position={[tram.lat, tram.lon]} />
-        <TramTimeline timeline={timeline}/>
+        <Map tramPosition={[tram.lat, tram.lon]} relPosition={relPosition}/>
+        <TramTimeline timeline={tram.timeline}/>
       </div>
     </div>
   );

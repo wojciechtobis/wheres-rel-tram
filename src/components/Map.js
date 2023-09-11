@@ -15,29 +15,35 @@ function UpdateMapComponent({center}) {
   return null
 }
 
-function Map({position}) {
-  const iconSize = 40
+function Map({tramPosition, relPosition}) {
+  function getIcon(image) {
+    const iconSize = 40
 
-  const elem = <div>
-    <img src={process.env.PUBLIC_URL + '/marker.svg'} alt="" style={{width: iconSize}} />
-  </div>
-
-  const icon = new L.divIcon({
-    html: ReactDOMServer.renderToStaticMarkup(elem),
-    className: null,
-    iconSize: [iconSize, iconSize],
-    iconAnchor: [iconSize / 2, iconSize / 2],
-  })
+    const elem = <div>
+      <img src={process.env.PUBLIC_URL + image} alt="" style={{width: iconSize}} />
+    </div>
+  
+    return new L.divIcon({
+      html: ReactDOMServer.renderToStaticMarkup(elem),
+      className: null,
+      iconSize: [iconSize, iconSize],
+      iconAnchor: [iconSize / 2, iconSize / 2],
+    })
+  }
+  
+  const tramMarker = getIcon('/marker.svg')
+  const relMarker = getIcon('/relativity.svg')
 
   return (
     <div className='map-container-wrapper'>
-          <MapContainer center={position} zoom={12} className='map-container'>
-            <UpdateMapComponent center={position}/>
+          <MapContainer center={tramPosition} zoom={12} className='map-container'>
+            <UpdateMapComponent center={tramPosition}/>
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <Marker position={position} icon={icon} />
+            <Marker position={tramPosition} icon={tramMarker} />
+            <Marker position={relPosition} icon={relMarker} />
           </MapContainer>
         </div>
   );
