@@ -11,7 +11,7 @@ export function updateTram(setTram, relPosition) {
         .then((response) => response.json())
         .then((json) => json.vehicle)
         .then(tram => {
-            if(!!tram) return ({
+            if(!!tram) setTram({
                 line: tram.route_short_name,
                 dir: tram.trip_headsign,
                 lat: tram.latitude,
@@ -20,7 +20,6 @@ export function updateTram(setTram, relPosition) {
                 path: tram.path.map(parsePath)
             })
         })
-        .then(tram => setTram(tram))
         .catch(error => {
             console.log('Error:::', error)
             setTram({ 
